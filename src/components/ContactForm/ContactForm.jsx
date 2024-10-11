@@ -4,18 +4,19 @@ import * as Yup from "yup";
 import { nanoid } from "nanoid";
 import s from "./ContactForm.module.css";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
+// import { addContact } from "../../redux/contactsSlice";
+import { addContact } from "../../redux/contactsOps";
 
-const formatPhoneNumber = (number) => {
-  const cleaned = number.replace(/\D/g, "");
+// const formatPhoneNumber = (number) => {
+//   const cleaned = number.replace(/\D/g, "");
 
-  const match = cleaned.match(/^(\d{3})(\d{2})(\d{2})$/);
-  if (match) {
-    return `${match[1]}-${match[2]}-${match[3]}`;
-  }
+//   const match = cleaned.match(/^(\d{3})(\d{2})(\d{2})$/);
+//   if (match) {
+//     return `${match[1]}-${match[2]}-${match[3]}`;
+//   }
 
-  return cleaned;
-};
+//   return cleaned;
+// };
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -32,15 +33,7 @@ const ContactForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, { resetForm }) => {
-    const formattedNumber = formatPhoneNumber(values.number);
-
-    const newContact = {
-      id: nanoid(),
-      name: values.name,
-      number: formattedNumber,
-    };
-
-    dispatch(addContact(newContact));
+    dispatch(addContact(values));
     resetForm();
   };
 
